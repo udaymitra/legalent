@@ -35,7 +35,7 @@ function HeroSection() {
         </h1>
         <p className="mt-6 text-lg md:text-xl text-neutral-600 max-w-2xl mx-auto leading-relaxed">
           The market is flooded with rigid tools that force you to change how
-          you work. At legalent.ai, we believe the software should adapt to the
+          you work. At Legalent.ai, we believe the software should adapt to the
           practitioner. You are the architect. We provide the high-precision
           infrastructure for you to build custom AI agents that mirror your
           specific logic, your templates, and your professional
@@ -128,7 +128,7 @@ function InfrastructureSection() {
           </h2>
           <p className="mt-6 text-lg text-neutral-600 leading-relaxed">
             Most legal AI is a &ldquo;black box&rdquo;&mdash;you can&apos;t see
-            the logic or tweak the engine. legalent.ai is a{" "}
+            the logic or tweak the engine. Legalent.ai is a{" "}
             <strong className="text-neutral-900">Glass Box</strong>. Every
             workflow you build is transparent, auditable, and entirely under
             your control. Stop adapting to your software; start building
@@ -148,7 +148,7 @@ function TeamSection() {
           Built by Industry Leaders
         </h2>
         <p className="mt-4 text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
-          We aren&apos;t just building another AI wrapper. legalent.ai is built
+          We aren&apos;t just building another AI wrapper. Legalent.ai is built
           by a team of engineers and leaders from{" "}
           <strong className="text-neutral-900">Uber</strong> and{" "}
           <strong className="text-neutral-900">Apple</strong> who have pioneered
@@ -239,7 +239,7 @@ function Footer() {
     <footer className="py-10 px-6 bg-neutral-900">
       <div className="max-w-6xl mx-auto">
         <span className="text-sm text-neutral-600">
-          &copy; {new Date().getFullYear()} LegalEnt.ai. All rights reserved.
+          &copy; {new Date().getFullYear()} Legalent.ai. All rights reserved.
         </span>
       </div>
     </footer>
