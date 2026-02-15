@@ -75,6 +75,9 @@ app/
 - Place in `app/api/[feature]/route.ts`
 - Use proper HTTP methods (GET, POST, PATCH, DELETE)
 - Return consistent JSON: `{ success: boolean, data?: any, error?: string }`
+- Document edge cases and business rules with comments above the handler (e.g., duplicate handling, silent vs. error behavior, input normalization)
+- Use `// TODO:` comments for known gaps that need future attention (e.g., missing validation, unhandled scenarios)
+- When implementing a new endpoint, review and call out: What happens on duplicate/conflict? What inputs are validated vs. passed through? What does the caller see on partial failure?
 
 ## Error Handling
 - Handle errors in business logic layer
@@ -110,3 +113,12 @@ app/
 - Use descriptive branch names: `feature/`, `fix/`, `chore/`
 - Keep commits focused and well-described
 - Do NOT include "Co-Authored-By" or any other AI/Claude attribution in commit messages
+
+## Pre-Push Review Checklist
+Before pushing any code, review and confirm:
+- **Diff review**: Run `git diff` and verify every changed line is intentional — no debug code, no unrelated changes, no secrets
+- **Plan alignment**: If a plan file exists for the feature, confirm the changes match the spec and update checkboxes accordingly
+- **Edge case comments**: Verify that non-obvious business rules, conflict handling, and silent behaviors are documented with comments
+- **TODO tracking**: Any known gaps or deferred work are marked with `// TODO:` comments
+- **Tests passing**: Run `npm test` (unit) and `npm run test:e2e` (browser) before pushing
+- **Build passing**: Run `npm run build` to catch type errors and build failures

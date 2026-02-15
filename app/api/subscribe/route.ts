@@ -6,10 +6,18 @@ function isValidEmail(email: string): boolean {
   return pattern.test(email);
 }
 
+// POST /api/subscribe
+// Adds an email to the subscribers table. Email is normalized (trimmed, lowercased).
+// Duplicate emails are silently ignored (ON CONFLICT DO NOTHING) — the user sees
+// a success response regardless, so re-subscribing is a no-op.
+// Returns: { success: true, data: { email } } on success (200)
+//          { success: false, error: string } on validation failure (400) or server error (500)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+    // TODO: Validate source against an allowed list (e.g., "legal", "blog") to prevent
+    // arbitrary values. Currently passed through as a free-form string.
     const source = typeof body.source === "string" ? body.source.trim() : "";
 
     if (!email) {
