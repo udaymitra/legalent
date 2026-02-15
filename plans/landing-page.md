@@ -22,6 +22,27 @@
 - [x] Create GitHub repo and push
 - [x] Deploy to Vercel
 
-## Unresolved Questions
-1. **Domain**: Is `legalent.ai` already configured, or will we use Vercel's default URL initially?
-2. **Logo**: User mentioned they have a logo — needs to be placed in `public/`
+### Phase 4: Email Capture Backend
+- [ ] Create API route for email submission (`app/api/subscribe/route.ts`)
+- [ ] Set up database (e.g., Vercel Postgres or similar)
+- [ ] Wire up "Stay Informed" form to API
+- [ ] Add validation and success/error feedback
+
+### Phase 5: Testing
+- [ ] Install Playwright for e2e browser testing
+- [ ] Install Jest + React Testing Library for unit/component tests
+- [ ] Write e2e tests for landing page flow
+- [ ] Write unit tests for business logic
+
+### Phase 6: Dark Mode
+- [ ] Add dark mode color tokens to design system
+- [ ] Add `dark:` variants across all components
+- [ ] Add theme toggle to header
+
+### Phase 7: Analytics
+- [ ] Integrate analytics (e.g., Vercel Analytics, PostHog)
+- [ ] Track page views and CTA interactions
+
+## Resolved Questions
+1. **Domain**: Using `legalent.ai`, configured via Vercel
+2. **Logo**: Placed in `public/logo.png`, displayed in header with brand text
