@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { subscribeEmail } from "@/app/LandingPageUtils";
 
 function Header() {
   return (
@@ -162,6 +163,30 @@ function TeamSection() {
 
 function CTASection() {
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  async function handleSubscribe() {
+    if (status === "loading") return;
+    setStatus("loading");
+    setMessage("");
+
+    const result = await subscribeEmail(email, "legal");
+
+    if (result.success) {
+      setStatus("success");
+      setMessage("You're on the list! We'll be in touch.");
+    } else {
+      setStatus("error");
+      setMessage(result.error || "Something went wrong.");
+    }
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      handleSubscribe();
+    }
+  }
 
   return (
     <section id="stay-informed" className="py-12 md:py-20 px-6 bg-primary-900">
@@ -176,21 +201,34 @@ function CTASection() {
           you. Sign up below to stay updated on our progress and to start a
           conversation.
         </p>
-        <div className="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@lawfirm.com"
-            className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent-400 text-base"
-          />
-          <button
-            type="button"
-            className="px-6 py-3 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-400 hover:text-neutral-900 transition-colors text-base whitespace-nowrap"
-          >
-            Stay Informed
-          </button>
-        </div>
+        {status === "success" ? (
+          <p className="mt-10 text-lg text-accent-400 font-medium">{message}</p>
+        ) : (
+          <>
+            <div className="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="you@lawfirm.com"
+                disabled={status === "loading"}
+                className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent-400 text-base disabled:opacity-50"
+              />
+              <button
+                type="button"
+                onClick={handleSubscribe}
+                disabled={status === "loading"}
+                className="px-6 py-3 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-400 hover:text-neutral-900 transition-colors text-base whitespace-nowrap disabled:opacity-50"
+              >
+                {status === "loading" ? "Submitting..." : "Stay Informed"}
+              </button>
+            </div>
+            {status === "error" && (
+              <p className="mt-3 text-sm text-red-400">{message}</p>
+            )}
+          </>
+        )}
       </div>
     </section>
   );

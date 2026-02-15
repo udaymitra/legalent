@@ -23,10 +23,10 @@
 - [x] Deploy to Vercel
 
 ### Phase 4: Email Capture Backend
-- [ ] Create API route for email submission (`app/api/subscribe/route.ts`)
-- [ ] Set up database (e.g., Vercel Postgres or similar)
-- [ ] Wire up "Stay Informed" form to API
-- [ ] Add validation and success/error feedback
+- [x] Create API route for email submission (`app/api/subscribe/route.ts`)
+- [x] Set up database (Vercel Postgres with `subscribers` table + `source` column)
+- [x] Wire up "Stay Informed" form to API
+- [x] Add validation and success/error feedback
 
 ### Phase 5: Testing
 - [ ] Install Playwright for e2e browser testing
