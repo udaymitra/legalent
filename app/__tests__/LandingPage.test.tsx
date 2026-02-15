@@ -6,6 +6,17 @@ jest.mock("@vercel/analytics", () => ({
   track: jest.fn(),
 }));
 
+class MockIntersectionObserver {
+  observe = jest.fn();
+  unobserve = jest.fn();
+  disconnect = jest.fn();
+  constructor() {}
+}
+Object.defineProperty(window, "IntersectionObserver", {
+  writable: true,
+  value: MockIntersectionObserver,
+});
+
 import LandingPage from "@/app/LandingPage";
 
 const mockFetch = jest.fn();

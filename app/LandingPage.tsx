@@ -1,9 +1,84 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { track } from "@vercel/analytics";
 import { subscribeEmail } from "@/app/LandingPageUtils";
 import ThemeToggle from "@/app/ThemeToggle";
+
+function useEngagementTracking() {
+  const firedMilestones = useRef(new Set<number>());
+  const sectionEntryTimes = useRef(new Map<string, number>());
+
+  const flushSectionTimes = useCallback(() => {
+    const now = Date.now();
+    sectionEntryTimes.current.forEach((entryTime, section) => {
+      const durationSeconds = Math.round((now - entryTime) / 1000);
+      if (durationSeconds >= 1) {
+        track("section_view", { section, duration_seconds: durationSeconds });
+      }
+    });
+    sectionEntryTimes.current.clear();
+  }, []);
+
+  useEffect(() => {
+    // Scroll depth sentinels
+    const sentinels = document.querySelectorAll("[data-scroll-sentinel]");
+    const depthObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const percent = Number(
+            (entry.target as HTMLElement).dataset.scrollSentinel
+          );
+          if (!firedMilestones.current.has(percent)) {
+            firedMilestones.current.add(percent);
+            track("scroll_depth", { percent });
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+    sentinels.forEach((el) => depthObserver.observe(el));
+
+    // Section visibility
+    const sections = document.querySelectorAll("[data-section]");
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const section = (entry.target as HTMLElement).dataset.section!;
+          if (entry.isIntersecting) {
+            sectionEntryTimes.current.set(section, Date.now());
+          } else {
+            const entryTime = sectionEntryTimes.current.get(section);
+            if (entryTime != null) {
+              const durationSeconds = Math.round(
+                (Date.now() - entryTime) / 1000
+              );
+              if (durationSeconds >= 1) {
+                track("section_view", {
+                  section,
+                  duration_seconds: durationSeconds,
+                });
+              }
+              sectionEntryTimes.current.delete(section);
+            }
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+    sections.forEach((el) => sectionObserver.observe(el));
+
+    const handleBeforeUnload = () => flushSectionTimes();
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      depthObserver.disconnect();
+      sectionObserver.disconnect();
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [flushSectionTimes]);
+}
 
 function Header() {
   return (
@@ -32,7 +107,7 @@ function Header() {
 
 function HeroSection() {
   return (
-    <section className="pt-32 pb-20 md:pt-44 md:pb-28 px-6">
+    <section data-section="hero" className="pt-32 pb-20 md:pt-44 md:pb-28 px-6">
       <div className="max-w-6xl mx-auto text-center">
         <h1 className="text-4xl md:text-[3.5rem] font-bold tracking-tight text-neutral-900 dark:text-neutral-50 leading-tight">
           Build the Law Firm
@@ -97,7 +172,7 @@ function CoreBeliefsSection() {
   ];
 
   return (
-    <section className="py-12 md:py-20 px-6 bg-white dark:bg-neutral-900">
+    <section data-section="core-beliefs" className="py-12 md:py-20 px-6 bg-white dark:bg-neutral-900">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-2xl md:text-4xl font-semibold text-neutral-900 dark:text-neutral-50 text-center">
           Our Core Beliefs
@@ -127,7 +202,7 @@ function CoreBeliefsSection() {
 
 function InfrastructureSection() {
   return (
-    <section className="py-12 md:py-20 px-6">
+    <section data-section="infrastructure" className="py-12 md:py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-4xl font-semibold text-neutral-900 dark:text-neutral-50">
@@ -149,7 +224,7 @@ function InfrastructureSection() {
 
 function TeamSection() {
   return (
-    <section className="py-12 md:py-20 px-6 bg-white dark:bg-neutral-900">
+    <section data-section="team" className="py-12 md:py-20 px-6 bg-white dark:bg-neutral-900">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-2xl md:text-4xl font-semibold text-neutral-900 dark:text-neutral-50">
           Built by Industry Leaders
@@ -197,7 +272,7 @@ function CTASection() {
   }
 
   return (
-    <section id="stay-informed" className="py-12 md:py-20 px-6 bg-primary-900">
+    <section id="stay-informed" data-section="cta" className="py-12 md:py-20 px-6 bg-primary-900">
       <div className="max-w-2xl mx-auto text-center">
         <h2 className="text-2xl md:text-4xl font-semibold text-white">
           Let&apos;s Build Together
@@ -255,14 +330,22 @@ function Footer() {
 }
 
 export default function LandingPage() {
+  useEngagementTracking();
+
   return (
     <>
       <Header />
-      <HeroSection />
-      <CoreBeliefsSection />
-      <InfrastructureSection />
-      <TeamSection />
-      <CTASection />
+      <main>
+        <HeroSection />
+        <div data-scroll-sentinel="25" aria-hidden="true" />
+        <CoreBeliefsSection />
+        <div data-scroll-sentinel="50" aria-hidden="true" />
+        <InfrastructureSection />
+        <div data-scroll-sentinel="75" aria-hidden="true" />
+        <TeamSection />
+        <CTASection />
+        <div data-scroll-sentinel="100" aria-hidden="true" />
+      </main>
       <Footer />
     </>
   );
