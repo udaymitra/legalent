@@ -35,9 +35,9 @@
 - [x] Write unit tests for business logic
 
 ### Phase 6: Dark Mode
-- [ ] Add dark mode color tokens to design system
-- [ ] Add `dark:` variants across all components
-- [ ] Add theme toggle to header
+- [x] Add dark mode color tokens to design system
+- [x] Add `dark:` variants across all components
+- [x] Add theme toggle to header
 
 ### Phase 7: Analytics
 - [ ] Integrate analytics (e.g., Vercel Analytics, PostHog)
