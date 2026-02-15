@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "LegalEnt.ai — Build the Law Firm of Your Design",
+  title: "Legalent.ai — Build the Law Firm of Your Design",
   description:
     "Build custom AI agents that mirror your specific legal workflows. Precision-engineered infrastructure for forward-thinking law firms.",
 };
