@@ -18,9 +18,9 @@
 
 ### Phase 3: Build Verification & Deploy
 - [x] Verify `npm run build` succeeds
-- [ ] Test responsive design in browser
-- [ ] Create GitHub repo and push
-- [ ] Deploy to Vercel
+- [x] Test responsive design in browser
+- [x] Create GitHub repo and push
+- [x] Deploy to Vercel
 
 ## Unresolved Questions
 1. **Domain**: Is `legalent.ai` already configured, or will we use Vercel's default URL initially?

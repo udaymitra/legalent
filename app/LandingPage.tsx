@@ -6,9 +6,12 @@ function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-100">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <span className="text-xl font-bold text-primary-900 tracking-tight">
-          LegalEnt<span className="text-accent-600">.ai</span>
-        </span>
+        <div className="flex items-center gap-2">
+          <img src="/logo.png" alt="Legalent.ai" className="h-12 md:h-14" />
+          <span className="text-xl font-bold text-primary-900 tracking-tight">
+            LegalEnt<span className="text-accent-600">.ai</span>
+          </span>
+        </div>
         <a
           href="#stay-informed"
           className="text-sm font-medium text-primary-700 hover:text-primary-500 transition-colors"
