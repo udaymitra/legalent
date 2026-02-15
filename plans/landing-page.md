@@ -29,10 +29,10 @@
 - [x] Add validation and success/error feedback
 
 ### Phase 5: Testing
-- [ ] Install Playwright for e2e browser testing
-- [ ] Install Jest + React Testing Library for unit/component tests
-- [ ] Write e2e tests for landing page flow
-- [ ] Write unit tests for business logic
+- [x] Install Playwright for e2e browser testing
+- [x] Install Jest + React Testing Library for unit/component tests
+- [x] Write e2e tests for landing page flow
+- [x] Write unit tests for business logic
 
 ### Phase 6: Dark Mode
 - [ ] Add dark mode color tokens to design system
