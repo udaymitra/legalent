@@ -42,6 +42,8 @@
 ### Phase 7: Analytics
 - [x] Integrate analytics (Vercel Analytics + Speed Insights)
 - [x] Track page views and CTA interactions
+- [x] Add scroll depth tracking (25/50/75/100% milestones)
+- [x] Add section read time tracking (time spent viewing each section)
 
 ## Resolved Questions
 1. **Domain**: Using `legalent.ai`, configured via Vercel
