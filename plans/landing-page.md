@@ -40,8 +40,8 @@
 - [x] Add theme toggle to header
 
 ### Phase 7: Analytics
-- [ ] Integrate analytics (e.g., Vercel Analytics, PostHog)
-- [ ] Track page views and CTA interactions
+- [x] Integrate analytics (Vercel Analytics + Speed Insights)
+- [x] Track page views and CTA interactions
 
 ## Resolved Questions
 1. **Domain**: Using `legalent.ai`, configured via Vercel

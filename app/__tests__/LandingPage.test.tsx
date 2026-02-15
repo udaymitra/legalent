@@ -1,6 +1,11 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
+
+jest.mock("@vercel/analytics", () => ({
+  track: jest.fn(),
+}));
+
 import LandingPage from "@/app/LandingPage";
 
 const mockFetch = jest.fn();

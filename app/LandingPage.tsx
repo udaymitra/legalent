@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 import { subscribeEmail } from "@/app/LandingPageUtils";
 import ThemeToggle from "@/app/ThemeToggle";
 
@@ -18,6 +19,7 @@ function Header() {
           <ThemeToggle />
           <a
             href="#stay-informed"
+            onClick={() => track("cta_click", { location: "header" })}
             className="text-sm font-medium text-primary-700 dark:text-primary-500 hover:text-primary-500 dark:hover:text-primary-100 transition-colors"
           >
             Get Early Access
@@ -48,6 +50,7 @@ function HeroSection() {
         <div className="mt-10">
           <a
             href="#stay-informed"
+            onClick={() => track("cta_click", { location: "hero" })}
             className="inline-block bg-accent-600 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent-400 hover:text-neutral-900 transition-colors text-base"
           >
             Stay Informed
@@ -178,6 +181,7 @@ function CTASection() {
     const result = await subscribeEmail(email, "legal");
 
     if (result.success) {
+      track("email_subscribe");
       setStatus("success");
       setMessage("You're on the list! We'll be in touch.");
     } else {
