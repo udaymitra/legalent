@@ -10,7 +10,7 @@ function Header() {
         <div className="flex items-center gap-2">
           <img src="/logo.png" alt="Legalent.ai" className="h-12 md:h-14" />
           <span className="text-xl font-bold text-primary-900 tracking-tight">
-            LegalEnt<span className="text-accent-600">.ai</span>
+            Legalent<span className="text-accent-600">.ai</span>
           </span>
         </div>
         <a
